@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Not Using Facebook Login for project submission. Account/Client needs SSL Certificate.  -->
+        {# <div class="col-12 text-center pb-5">
+            <h2>Facebook</h2>
+            <fb:login-button scope="public_profile,email" onlogin="sendFacebookToken">
+                <a class="btn" href="javascript:sendFacebookToken();">Login With Facebook</a>
+            </fb:login-button>
+        </div> #}
+        <div class="col-12 text-center pb-5">
+            <h2>Google</h2>
+            <span class="g-signin" data-scope="openid email" data-clientid="{{google_client_id}}" data-redirecturi="postmessage" data-accesstype="offline" data-cookiepolicy="single_host_origin" data-callback="sendGoogleToken" data-approvalprompt="force">
+                </span>
+        </div>
+        <div class="col-12 text-center">
+            <div id="result"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="//apis.google.com/js/platform.js?onload=start"></script>
+<script type="text/javascript">
+
+    function sendGoogleToken(authResult) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/gconnect?state={{state}}',
+            processData: false,
+            contentType: 'application/octet-stream; charset=utf-8',
+            data: authResult['code'],
+            success: function(result) {
+                $('#result').html(result)
+                setTimeout(function() {
+                    window.location.href = '/';
+                }, 2000)
+            }
+        });
+
+    }
+</script>
+{% endblock %}

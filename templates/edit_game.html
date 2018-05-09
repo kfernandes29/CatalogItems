@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12 mb-5">
+                <div class="float-left">
+                    <h1>{{game.home_team.name}} vs {{game.away_team.name}}</h1>
+                </div>
+                <div class="float-right">
+                    <a class="btn btn-primary" href="{{url_for('createResult', league_id=league.slug, game_id=game.id)}}">Create Result</a>
+                    <a class="btn btn-danger" href="{{url_for('deleteGame', league_id=league.slug, game_id=game.id)}}">Delete Game</a>
+                </div>
+            </div>
+            <div class="col-12">
+                <form class="form" action="{{url_for('editGame', league_id=league.slug, game_id=game.id)}}" method="post">
+                    <div class="form-group">
+                        <label class="form-label" for="date_time">Date:</label>
+                        <input class="form-control" id="date_time" type="text" name="date_time" placeholder="{{game.date_time.strftime("%m-%d-%Y %I:%M%p")}}" value="{{game.date_time.strftime("%m-%d-%Y %I:%M%p")}}">
+                        <small>example: 03-25-2018 07:00PM</small>
+                    </div>
+                    <input class="btn btn-primary" type="submit" name="submit" value="Save">
+                    <a class="btn btn-secondary" href="{{url_for('showLeague', league_id=league.slug)}}">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

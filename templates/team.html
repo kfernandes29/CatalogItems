@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="float-left">
+                    <h1>{{team.name}}</h1>
+                </div>
+                {% if session.user_id == team.league.user_id %}
+                    <div class="float-right">
+                        <a class="btn btn-primary" href="{{url_for('editTeam', league_id=league.slug, team_id=team.slug)}}">Edit</a>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-12">
+                <ul class="players-list">
+                    <li>Player One</li>
+                    <li>Player Two</li>
+                    <li>Player Three</li>
+                    <li>Player Four</li>
+                    <li>Player Five</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

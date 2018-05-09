@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12 mb-5">
+                {% if session.user_id == league.user_id %}
+                    <div class="float-md-right">
+                        <a class="btn btn-success" href="{{url_for('createTeam', league_id=league.slug)}}">Add A Team</a>
+                        <a class="btn btn-secondary" href="{{url_for('createGame', league_id=league.id)}}">Schedule A Game</a>
+                        <a class="btn btn-primary" href="{{url_for('editLeague', league_id=league.slug)}}">Edit League</a>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-12 col-md-3">
+                <h1 class="mb-5">{{league.name}}</h1>
+                <ul class="list-unstyled">
+                    {% for team in teams %}
+                        <li class="team mb-3"><a href="{{url_for('showTeam', league_id=league.slug, team_id=team.slug)}}">{{team.name}}</a></li>
+                    {% else %}
+                        <h4><em>No teams</em></h4>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-12 col-md-9">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mb-5">Latest Scores</h1>
+                    </div>
+                    {% for game in completed %}
+                        <div class="col-12 col-md-6">
+                            {% if league.user.id == session.user_id %}
+                                <a class="btn btn-sm mb-3" href="{{url_for('editResult', league_id=league.slug, game_id=game.id)}}">Edit Result</a>
+                            {% endif %}
+                            <table class="table table-sm">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="text-center" scope="col">{{ game.away_team.name }}</th>
+                                        <th class="text-center" scope="col">@</th>
+                                        <th class="text-center" scope="col">{{ game.home_team.name }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">{{game.result.away_score}}</td>
+                                        <td class="text-center">-</td>
+                                        <td class="text-center">{{game.result.home_score}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="col-12">
+                            <p><em>No game results</em></p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row py-5">
+                    <div class="col-12">
+                        <h1 class="mb-5">Upcoming Games</h1>
+                    </div>
+                    <div class="col-12">
+                        <ul class="p-0 list-unstyled">
+                            {% for game in upcoming %}
+                                <li>
+                                    {% if league.user.id == session.user_id %}
+                                        <a class="btn btn-sm p-0 mb-3" href="{{url_for('editGame', league_id=league.slug, game_id=game.id)}}">Edit Game</a>
+                                    {% endif %}
+                                    <p>{{ game.away_team.name }} @ {{ game.home_team.name }} - {{game.date_time.strftime("%m-%d-%Y %I:%M%p")}}</p>
+                                </li>
+                            {% else %}
+                                <li><em>No upcoming games</em></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

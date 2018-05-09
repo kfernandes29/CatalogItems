@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{{url_for('showLeagues')}}">Sports Scores</a>
+        <div class="nav-buttons float-right">
+            {% if 'user_id' not in session %}
+                <a class="btn btn-secondary" href="{{url_for('login')}}">Login</a>
+            {% else %}
+                <a class="btn text-light mr-2" href="{{url_for('createLeague')}}">Create A League</a>
+                <a class="btn btn-secondary" href="{{url_for('logout')}}">Logout</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% with messages = get_flashed_messages() %} {% if messages %}
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-12 text-center">
+            {% for message in messages %}
+                <h6><strong>{{ message }}</strong></h6>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %} {% endwith %}

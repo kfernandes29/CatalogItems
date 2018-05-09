@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+        <meta charset="utf-8">
+        <title>Sports Scores</title>
+    </head>
+    <body>
+        <header>
+            {% include "header.html" %}
+        </header>
+        {% block content %}
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>No Content On This Page</h1>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        <footer>
+        </footer>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

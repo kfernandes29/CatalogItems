@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12 mb-5">
+                <h1>Schedule a game for {{league.name}}</h1>
+            </div>
+            <div class="col-12">
+                <form class="form" action="{{url_for('createGame', league_id=league.slug)}}" method="post">
+                    <fieldset class="form-group">
+                        <legend>Home Team:</legend>
+                        {% for team in teams %}
+                            <div class="form-check">
+                                <label class="form-check-label" for="home-team--{{team.name}}">
+                                    <input id="home-team--{{team.name}}" class="form-check-input" type="radio" name="home_team" value="{{team.id}}" placeholder="03-25-2018 07:00PM">
+                                    {{team.name}}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <legend>Away Team:</legend>
+                        {% for team in teams %}
+                            <div class="form-check">
+                                <label class="form-check-label" for="away-team--{{team.name}}">
+                                    <input id="away-team--{{team.name}}" class="form-check-input" type="radio" name="away_team" value="{{team.id}}">
+                                    {{team.name}}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </fieldset>
+                    <div class="form-group">
+                        <label class="form-label" for="date_time">Date:</label>
+                        <input class="form-control" id="date_time" type="text" name="date_time" value="" placeholder="">
+                        <small>example 03-25-2018 07:00PM</small>
+                    </div>
+                    <input class="btn btn-primary" type="submit" name="submit" value="Save">
+                    <a class="btn btn-secondary" href="{{url_for('showLeague', league_id=league.slug)}}">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
